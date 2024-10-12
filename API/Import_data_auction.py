@@ -1,9 +1,14 @@
 from blizzardapi2 import BlizzardApi
 import mysql.connector
 from datetime import datetime
+from dotenv import load_dotenv
+import os
 
 
-api_client = BlizzardApi("1da39a413b0943d4ba886681394d419b", "O5cWyf6YBvozdpCQquid2KTmJZ2DolDz")
+load_dotenv()
+client_id = os.getenv('CLIENT_ID')
+client_secret = os.getenv('CLIENT_SECRET')
+api_client = BlizzardApi(client_id, client_secret)
 list_id_realm = [4476,4467,4465,4454,4440,4453,4477,4441,4442,4474,4464,4701,4749,4813,4456,4455,4811,4678,4815,4742,4452,4745,4466,4703,4816]
 list_name_realm = ["Gehennas","Firemaw","Golemagg","Mirage_Raceway","Everlook","Pyrewood_Village", "Venoxis", "Auberdine","Lakeshire","Flamegor","Sulfuron","Mograine","Earthshaker","Mandokir","Nethergarde_Keep","Razorfen", "Giantstalker","Hydraxian_Waterlords","Thekal","Ashbringer","Chromie","Transcendence","Patchwerk","Amnennar","Jin'do"]
 

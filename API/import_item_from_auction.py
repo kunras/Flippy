@@ -1,9 +1,15 @@
 from blizzardapi2 import BlizzardApi
 import mysql.connector
 import requests
+from dotenv import load_dotenv
+import os
+
 
 # Connexion à l'API Blizzard
-api_client = BlizzardApi("1da39a413b0943d4ba886681394d419b", "O5cWyf6YBvozdpCQquid2KTmJZ2DolDz")
+load_dotenv()
+client_id = os.getenv('CLIENT_ID')
+client_secret = os.getenv('CLIENT_SECRET')
+api_client = BlizzardApi(client_id, client_secret)
 
 # Connexion à la base de données MySQL
 mydb = mysql.connector.connect(
@@ -106,7 +112,6 @@ ORDER BY item_id ASC;
 data_id = cursor.fetchall()
 
 # Préparer les données à insérer avec executemany
-data_to_insert = []
 for row in data_id:
     id = row[0]
     print(id)
@@ -116,19 +121,19 @@ for row in data_id:
         try:
             img_search = api_client.wow.game_data.get_item_media("eu", "fr_FR", id, True)
             # Ajouter les données à insérer dans la liste
-            data_to_insert.append((
-                id, 
-                name_search["name"], 
-                img_search["assets"][0]["value"]
-            ))
+            cursor.execute('''INSERT INTO items (id_item, name_item, url_img)
+            VALUES (%s, %s, %s)
+            ON DUPLICATE KEY UPDATE name_item=%s, url_img=%s''',
+            (id,name_search["name"],img_search["assets"][0]["value"],name_search["name"],img_search["assets"][0]["value"]))
+
         except requests.exceptions.HTTPError as e:
             if e.response.status_code == 404:
                 print(f'image non trouvé pour l\'id : {id}')
-                data_to_insert.append((
-                id, 
-                name_search["name"], 
-                "null"
-            ))
+                cursor.execute('''INSERT INTO items (id_item, name_item, url_img)
+                VALUES (%s, %s, NULL)
+                ON DUPLICATE KEY UPDATE name_item=%s, url_img=NULL''',
+                (id,name_search["name"],name_search["name"]))
+                
             else:
                 print(f'Autre prob avec l\'id : {id}')
     except requests.exceptions.HTTPError as e:
@@ -138,14 +143,6 @@ for row in data_id:
             print(f'Autre prob avec l\'id : {id}')
 
         
-
-# Insertion des données en une seule fois
-cursor.executemany('''
-    INSERT INTO items (id_item, name_item, url_img)
-    VALUES (%s, %s, %s)
-    ON DUPLICATE KEY UPDATE name_item=%s, url_img=%s
-''', [(id, name, url, name, url) for id, name, url in data_to_insert])
-
 # Commit des changements
 mydb.commit()
 

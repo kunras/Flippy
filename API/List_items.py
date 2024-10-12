@@ -1,8 +1,13 @@
 from blizzardapi2 import BlizzardApi
 import mysql.connector
 import requests
+from dotenv import load_dotenv
+import os
 
-api_client = BlizzardApi("1da39a413b0943d4ba886681394d419b", "O5cWyf6YBvozdpCQquid2KTmJZ2DolDz")
+load_dotenv()
+client_id = os.getenv('CLIENT_ID')
+client_secret = os.getenv('CLIENT_SECRET')
+api_client = BlizzardApi(client_id, client_secret)
 mydb = mysql.connector.connect(
     host="localhost",
     user="root",

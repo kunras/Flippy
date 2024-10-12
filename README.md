@@ -8,7 +8,12 @@ Website de comparaison de prix entre divers serveur de World of Warcraft Catacly
 - Comparaison entre tout les serveurs EU
 - Possibilité de prédéfinir une liste d'achat
 - Trouver le serveur le + et le - chère selon la liste d'achat
+- Voir l'historique du prix du token wow
 
-## Dépendance
+## Setup
 
-[blizzardapi2](https://github.com/lostcol0ny/blizzardapi2)
+1. ```pip install -r requirements.txt```
+2. Créer un .env avec :
+
+>CLIENT_ID=leclientid  
+>CLIENT_SECRET=leclientsecret
