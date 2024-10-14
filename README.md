@@ -13,7 +13,4 @@ Website de comparaison de prix entre divers serveur de World of Warcraft Catacly
 ## Setup
 
 1. ```pip install -r requirements.txt```
-2. Créer un .env avec :
-
->CLIENT_ID=leclientid  
->CLIENT_SECRET=leclientsecret
+2. Créer un .env à partir du .env.template

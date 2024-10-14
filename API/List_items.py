@@ -5,14 +5,12 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-client_id = os.getenv('CLIENT_ID')
-client_secret = os.getenv('CLIENT_SECRET')
-api_client = BlizzardApi(client_id, client_secret)
+api_client = BlizzardApi(os.getenv('CLIENT_ID'), os.getenv('CLIENT_SECRET'))
 mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="data_cata"
+    host=os.getenv('HOST_DB'),
+    user=os.getenv('USER_DB'),
+    password=os.getenv('PASSWORD_DB'),
+    database=os.getenv('DATABASE_DB')
 )
 cursor = mydb.cursor()
 

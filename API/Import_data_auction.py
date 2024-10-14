@@ -6,17 +6,15 @@ import os
 
 
 load_dotenv()
-client_id = os.getenv('CLIENT_ID')
-client_secret = os.getenv('CLIENT_SECRET')
-api_client = BlizzardApi(client_id, client_secret)
+api_client = BlizzardApi(os.getenv('CLIENT_ID'), os.getenv('CLIENT_SECRET'))
 list_id_realm = [4476,4467,4465,4454,4440,4453,4477,4441,4442,4474,4464,4701,4749,4813,4456,4455,4811,4678,4815,4742,4452,4745,4466,4703,4816]
 list_name_realm = ["Gehennas","Firemaw","Golemagg","Mirage_Raceway","Everlook","Pyrewood_Village", "Venoxis", "Auberdine","Lakeshire","Flamegor","Sulfuron","Mograine","Earthshaker","Mandokir","Nethergarde_Keep","Razorfen", "Giantstalker","Hydraxian_Waterlords","Thekal","Ashbringer","Chromie","Transcendence","Patchwerk","Amnennar","Jin'do"]
 
 mydb = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="data_cata"
+    host=os.getenv('HOST_DB'),
+    user=os.getenv('USER_DB'),
+    password=os.getenv('PASSWORD_DB'),
+    database=os.getenv('DATABASE_DB')
 )
 cursor = mydb.cursor()
 
