@@ -27,12 +27,20 @@ class HomeController {
         return $this -> view("faq");
     }
 
-    private function view($view, $data = []) {
+    private function view($view) {
         // Extraire les données pour les rendre disponibles dans la vue
-        extract($data);
+        // extract($data);
 
-        // Inclure le fichier de la vue
-        require __DIR__ . '\\..\\Views\\' . $view . '.php';
-        echo "ceci est " . $view;
+        // Construire le chemin de la vue
+        $viewFile = __DIR__ . '\\..\\Views\\' . $view . '.php';
+
+        // Vérifier si le fichier existe
+        if (file_exists($viewFile)) {
+            // Inclure la vue si elle existe
+            require $viewFile;
+        } else {
+            // Gérer l'erreur si la vue n'existe pas
+            echo "La vue {$view} n'existe pas.";
+        }
     }
 }

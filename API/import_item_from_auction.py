@@ -7,6 +7,7 @@ import os
 
 # Connexion à l'API Blizzard
 load_dotenv()
+<<<<<<< HEAD
 client_id = os.getenv('CLIENT_ID')
 client_secret = os.getenv('CLIENT_SECRET')
 api_client = BlizzardApi(client_id, client_secret)
@@ -17,6 +18,17 @@ mydb = mysql.connector.connect(
     user="root",
     password="root",
     database="data_cata"
+=======
+api_client = BlizzardApi(os.getenv('CLIENT_ID'), os.getenv('CLIENT_SECRET'))
+
+
+# Connexion à la base de données MySQL
+mydb = mysql.connector.connect(
+    host=os.getenv('HOST_DB'),
+    user=os.getenv('USER_DB'),
+    password=os.getenv('PASSWORD_DB'),
+    database=os.getenv('DATABASE_DB')
+>>>>>>> e15b731a52d997c3a383e12c70043e73d6dae01b
 )
 cursor = mydb.cursor()
 

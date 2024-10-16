@@ -2,7 +2,7 @@
 
 use App\Controllers\HomeController;
 
-$router -> get("/home", function() {
+$router -> get("Flippy/public/home", function() {
     $controller = new HomeController();
     $controller -> index();
 });
@@ -30,4 +30,8 @@ $router -> get("/historique", function() {
 $router -> get("/faq", function() {
     $controller = new HomeController();
     $controller -> faq();
+});
+
+$router->get('/test', function() {
+    echo "Test route fonctionne";
 });
