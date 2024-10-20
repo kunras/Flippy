@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# Rediriger tout vers le dossier public
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ public/$1 [L]
+
+# Gérer les requêtes vers index.php dans public
+<IfModule mod_rewrite.c>
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /public/index.php [QSA,L]
+</IfModule>
